@@ -1,0 +1,52 @@
+appname: lvault  # 全局唯一的应用名
+
+build: 
+  base: laincloud/centos-lain
+  prepare:  
+    version: lvaultv2 
+    script: 
+      - ./prepare.sh
+    keep:
+      - node_modules
+  script:  
+    - ./build.sh 
+
+release: 
+  dest_base: laincloud/centos-lain
+  copy: 
+    - src: $GOPATH/bin/vault
+      dest: /usr/bin/vault
+    - src: lvault.sh
+      dest: lvault.sh
+    - src: vault.sh
+      dest: vault.sh
+    - src: start.sh
+      dest: start.sh
+    - src: config
+      dest: config
+    - src: /lain/app/lvault-0.1/*
+      dest: /lain/app/
+
+test:  
+  script:
+    - go test
+
+web:  # 定义一个 web 服务
+  cmd: ./vault.sh # 基于 release 产生的发布用 image 运行
+  port: 8200  # 服务监听的端口，默认为自动分配一个放在 `PORT` 环境变量里
+  num_instances: 1
+  env:
+    - VAULT_ADDR=http://127.0.0.1:8200
+  persistent_dirs:
+    - /lain/app/log
+
+proc.lvault:
+  type: web
+  cmd: ./lvault.sh 
+  mountpoint:
+    - /v2
+  port: 8001
+  num_instances: 1
+
+notify:
+  slack: "#hello"  # 应用相关的通知和报警都会发送到该 slack channel

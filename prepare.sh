@@ -13,6 +13,8 @@ go get github.com/mijia/sweb/log
 cd /lain/app
 
 yum -y install unzip
+git clone --depth=1 https://github.com/golang/sys.git /go/src/golang.org/x/sys # GFW
+git clone --depth=1 https://github.com/golang/net.git /go/src/golang.org/x/net
 go get github.com/mijia/gobuildweb
 gobuildweb dist
 ls -1 | grep -v node_modules | xargs rm -rf

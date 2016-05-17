@@ -12,8 +12,12 @@ import (
 
 var VaultURL string
 
-func (c *VaultClient) InitClient() {
+func (c *VaultClient) InitClient(tls bool) {
 	VaultURL = "http://lvault." + os.Getenv("LAIN_DOMAIN") + "/"
+	if tls {
+		log.Info("using https to send messages to vault cluster")
+		VaultURL = "https://lvault." + os.Getenv("LAIN_DOMAIN") + "/"
+	}
 	config := api.DefaultConfig()
 	config.Address = VaultURL
 	var err error

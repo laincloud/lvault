@@ -44,8 +44,9 @@ func main() {
 	flag.StringVar(&ssoid, "ssoid", "1", "Client ID of Lvault on SSO site")
 	flag.StringVar(&ssosecret, "ssosecret", "http://localhost:8011", "Client secret of Lvault")
 
-	var isDebug bool
+	var isDebug, isHttps bool
 	flag.BoolVar(&isDebug, "debug", false, "Debug mode switch")
+	flag.BoolVar(&isHttps, "https", false, "Scheme for communicating with the vault backend")
 
 	flag.Parse()
 
@@ -57,6 +58,7 @@ func main() {
 	}
 
 	var l Lvault
+	l.HTTPS = isHttps
 	l.Init()
 	l.SSOSite = ssoserver
 	l.ClientId = ssoid

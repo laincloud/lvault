@@ -36,6 +36,8 @@ type Lvault struct {
 	SSOSite      string
 	ClientId     string
 	ClientSecret string
+
+	HTTPS bool
 }
 
 const (
@@ -53,7 +55,7 @@ func (l *Lvault) Init() error {
 	l.others = make(map[string]string)
 	l.Vault = &vaultcli.VaultClient{}
 
-	l.Vault.InitClient()
+	l.Vault.InitClient(l.HTTPS)
 
 	procname := os.Getenv("LAIN_PROCNAME")
 	insnum := os.Getenv("DEPLOYD_POD_INSTANCE_NO")

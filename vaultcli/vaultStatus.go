@@ -2,6 +2,7 @@ package vaultcli
 
 import (
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 
@@ -129,6 +130,9 @@ func (v *VaultStatus) UpdateStatus() {
 				v.Containers[ip_port] = ContainerInfoWithStatus{d, tmp}
 				if tmp.Sealed == false {
 					v.unsealedAddress = "http://" + ip_port
+					if isUsingHTTPS() {
+						v.unsealedAddress = "https://" + ip_port
+					}
 				}
 				v.Lock.Unlock()
 			}
@@ -136,9 +140,16 @@ func (v *VaultStatus) UpdateStatus() {
 	}
 }
 
+func isUsingHTTPS() bool {
+	return strings.HasPrefix(VaultURL, "https")
+}
+
 func getContainerStatus(info ContainerInfo) ContainerStatus {
 	ip_port := info.ContainerIp + ":" + strconv.Itoa(info.ContainerPort)
 	url := "http://" + ip_port + "/v1/sys/seal-status"
+	if isUsingHTTPS() {
+		url = "https://" + ip_port + "/v1/sys/seal-status"
+	}
 	var tmp ContainerStatus
 	resp, geterr := http.Get(url)
 	for geterr != nil {

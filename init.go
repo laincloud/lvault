@@ -38,12 +38,13 @@ func (l *Lvault) init(ctx context.Context, w http.ResponseWriter, req *http.Requ
 		log.Debug(err)
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(err.Error()))
+		return ctx
 	} else {
 		l.RootToken = initResp.RootToken
 		l.UnsealKey = initResp.Keys
 		l.SetMissToken(false)
+		tk_keys, _ := json.Marshal(initResp)
+		w.Write(tk_keys)
+		return ctx
 	}
-	tk_keys, _ := json.Marshal(initResp)
-	w.Write(tk_keys)
-	return ctx
 }

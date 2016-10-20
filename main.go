@@ -42,7 +42,7 @@ func main() {
 	var ssoserver, ssoid, ssosecret string
 	flag.StringVar(&ssoserver, "ssoserver", "https://sso.example.com", "Base URL of SSO site")
 	flag.StringVar(&ssoid, "ssoid", "1", "Client ID of Lvault on SSO site")
-	flag.StringVar(&ssosecret, "ssosecret", "http://localhost:8011", "Client secret of Lvault")
+	flag.StringVar(&ssosecret, "ssosecret", "", "Client secret of Lvault")
 
 	var isDebug, isHttps bool
 	flag.BoolVar(&isDebug, "debug", false, "Debug mode switch")

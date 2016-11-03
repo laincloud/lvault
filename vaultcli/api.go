@@ -31,6 +31,11 @@ func (c *VaultClient) InitClient(tls bool) {
 }
 
 func (c *VaultClient) UpdateClient() {
+	defer func() {
+		if err := recover(); err != nil {
+			log.Error(err)
+		}
+	}()
 	for {
 		time.Sleep(5 * time.Second)
 		seal, err := c.c.Sys().SealStatus()
@@ -41,7 +46,7 @@ func (c *VaultClient) UpdateClient() {
 			panic(err)
 		}
 		if seal.Sealed == false {
-			log.Debug("healthy")
+			//log.Debug("healthy")
 			continue
 		}
 		unsealedURL := c.status.UnsealedURL()

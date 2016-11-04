@@ -17,7 +17,7 @@ let AdminIndexCard = React.createClass({
           <h2 className="mdl-card__title-text">自助服务</h2>
         </div>
         <div className="mdl-card__supporting-text" style={this.styles.supporting}>
-			先注册应用成为应用管理者，然后登录可以写自己应用的 seceret files.
+			先注册应用成为应用管理者，然后登录可以写自己应用的 secret files.
 		</div>
         
         <div style={{ padding: 8 }}>

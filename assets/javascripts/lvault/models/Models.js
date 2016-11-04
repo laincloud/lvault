@@ -90,7 +90,7 @@ export let Admin = {
     if (checkGroup) {
       query['ag'] = checkGroup;
     }
-	const redirectUrl = `${window.location.protocol}//${window.location.host}/v2/spa/admin/authorize?${this.toQuery(query)}`;
+    const redirectUrl = `${window.location.protocol}//${window.location.host}/v2/spa/admin/authorize?${this.toQuery(query)}`;
     let formData = {
       client_id: this.clientId,
       client_secret: this.secret,

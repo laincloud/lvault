@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/mijia/sweb/log"
 
@@ -52,6 +53,8 @@ func parseErr(err error) (int, []byte) {
 }
 
 func (l *Lvault) SecretsEndpoint(ctx context.Context, w http.ResponseWriter, req *http.Request) context.Context {
+
+	log.Debug(time.Now().UnixNano())
 	log.Debug(req)
 	body, _ := ioutil.ReadAll(req.Body)
 	req.ParseForm()
@@ -60,9 +63,11 @@ func (l *Lvault) SecretsEndpoint(ctx context.Context, w http.ResponseWriter, req
 	if ok := checkMaintainerAuth(req); !ok {
 		w.WriteHeader(http.StatusUnauthorized)
 		w.Write([]byte(`{"error":"authentication failed"}`))
+		log.Debug(time.Now().UnixNano())
 		return ctx
 	}
 
+	log.Debug(time.Now().UnixNano())
 	app, proc, path, err := getCheckedParams(req)
 	log.Debug(app)
 	log.Debug(proc)
@@ -71,6 +76,7 @@ func (l *Lvault) SecretsEndpoint(ctx context.Context, w http.ResponseWriter, req
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(err.Error()))
+		log.Debug(time.Now().UnixNano())
 		return ctx
 	}
 	switch req.Method {
@@ -87,6 +93,7 @@ func (l *Lvault) SecretsEndpoint(ctx context.Context, w http.ResponseWriter, req
 			code, retD := parseErr(err)
 			w.WriteHeader(code)
 			w.Write(retD)
+			log.Debug(time.Now().UnixNano())
 			return ctx
 		}
 		var data []Data
@@ -119,6 +126,7 @@ func (l *Lvault) SecretsEndpoint(ctx context.Context, w http.ResponseWriter, req
 		if path == "" || proc == "" {
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte("require parameters"))
+			log.Debug(time.Now().UnixNano())
 			return ctx
 		}
 		totalPath := DATAPATHPREFIX + app + "/" + proc + path
@@ -132,12 +140,14 @@ func (l *Lvault) SecretsEndpoint(ctx context.Context, w http.ResponseWriter, req
 			code, retD := parseErr(err)
 			w.WriteHeader(code)
 			w.Write(retD)
+			log.Debug(time.Now().UnixNano())
 			return ctx
 		}
 	case "DELETE":
 		if path == "" || proc == "" {
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte("require parameters"))
+			log.Debug(time.Now().UnixNano())
 			return ctx
 		}
 		totalPath := app + "/" + proc + path
@@ -147,9 +157,11 @@ func (l *Lvault) SecretsEndpoint(ctx context.Context, w http.ResponseWriter, req
 			code, retD := parseErr(err)
 			w.WriteHeader(code)
 			w.Write(retD)
+			log.Debug(time.Now().UnixNano())
 			return ctx
 		}
 	}
+	log.Debug(time.Now().UnixNano())
 	return ctx
 }
 

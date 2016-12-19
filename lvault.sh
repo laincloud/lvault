@@ -2,7 +2,7 @@
 
 sleep 3
 environ=$LAIN_DOMAIN
-DEBUG="true"
+DEBUG="false"
 HTTPS="false"
 
 source ./config

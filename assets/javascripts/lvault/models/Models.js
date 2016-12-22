@@ -6,7 +6,7 @@ export let User = {
 	const {access, ty} = Admin.getTokenCookie()
     const token = access
     const tokenType = ty
-    if(typeof formData.procname == undefined){
+    if(formData.procname == undefined){
       Fetch.text(`/v2/secrets?app=${formData.appname}`, 'GET',{token, tokenType} , null, (code, txt) => {
 		  callback && callback(code === 200, code === 200 ? `Succeed! ${txt}` : `Failed! ${txt}`);
         }, (msg) => {

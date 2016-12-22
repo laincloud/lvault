@@ -11,7 +11,6 @@ let ReadSecretsCard = React.createClass({
     return {
       formValids: {
 		  'appname': true,
-		  'procname': true,
       },
     };
   },
@@ -32,7 +31,7 @@ let ReadSecretsCard = React.createClass({
           reqResult.fin && reqResult.ok ? null :
             this.renderForm(this.onReset, [
 				this.renderInput("appname", "APP name*(字母、数字、减号和'.')", { type: "text", pattern: "[\-a-zA-Z0-9.]*" }),
-				this.renderInput("procname", "proc 全名*(eg appname.web.procname)", { type: 'text' }),
+				this.renderInput("procname", "proc 全名(eg appname.web.procname)", { type: 'text' }),
             ])
         }
         { this.renderAction("查询", this.onReset) }
@@ -41,7 +40,7 @@ let ReadSecretsCard = React.createClass({
   },
 
   onReset() {
-    const {isValid, formData} = this.validateForm(["appname","procname"], ["appname","procname"]);
+    const {isValid, formData} = this.validateForm(["appname","procname"], ["appname"]);
     if (isValid) {
       this.setState({ inRequest: true });
       User.getSecrets(formData, this.onRequestCallback);

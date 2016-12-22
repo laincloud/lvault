@@ -6,12 +6,20 @@ export let User = {
 	const {access, ty} = Admin.getTokenCookie()
     const token = access
     const tokenType = ty
-	Fetch.text(`/v2/secrets?app=${formData.appname}&proc=${formData.procname}`, 'GET',{token, tokenType} , null, (code, txt) => {
-		callback && callback(code === 200, code === 200 ? `Succeed! ${txt}` : `Failed! ${txt}`);
-		console.log(txt);
-    }, (msg) => {
-      callback && callback(false, msg); 
-    });
+    if(typeof formData.procname == undefined){
+      Fetch.text(`/v2/secrets?app=${formData.appname}`, 'GET',{token, tokenType} , null, (code, txt) => {
+		  callback && callback(code === 200, code === 200 ? `Succeed! ${txt}` : `Failed! ${txt}`);
+        }, (msg) => {
+        callback && callback(false, msg); 
+      });
+    }
+    else{
+      Fetch.text(`/v2/secrets?app=${formData.appname}&proc=${formData.procname}`, 'GET',{token, tokenType} , null, (code, txt) => {
+		  callback && callback(code === 200, code === 200 ? `Succeed! ${txt}` : `Failed! ${txt}`);
+        }, (msg) => {
+        callback && callback(false, msg); 
+      });
+    }
   },
 
   putSecret(formData, callback) {

@@ -35,12 +35,12 @@ let WriteSecretCard = React.createClass({
               this.renderTextArea("content", "当前 secret file 的内容", { type: 'text' }), 
             ])
         }
-        { this.renderAction("提交", this.onRegister) }
+        { this.renderAction("提交", this.onWriteSecret) }
       </div>
     );
   },
 
-  onRegister() {
+  onWriteSecret() {
 	const fields = ['appname', 'procname', 'content', 'fpath'];
     const rFields = ['appname', 'procname', 'fpath'];
     const {isValid, formData} = this.validateForm(fields, rFields);

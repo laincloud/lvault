@@ -6,16 +6,16 @@ export let User = {
 	const {access, ty} = Admin.getTokenCookie()
     const token = access
     const tokenType = ty
-    if(formData.procname == undefined){
+    if(formData.procname == undefined || formData.procname == 'undefined'){
       Fetch.text(`/v2/secrets?app=${formData.appname}`, 'GET',{token, tokenType} , null, (code, txt) => {
-		  callback && callback(code === 200, code === 200 ? `Succeed! ${txt}` : `Failed! ${txt}`);
+		  callback && callback(code === 200, code === 200 ? `${txt}` : `Failed! ${txt}`);
         }, (msg) => {
         callback && callback(false, msg); 
       });
     }
     else{
       Fetch.text(`/v2/secrets?app=${formData.appname}&proc=${formData.procname}`, 'GET',{token, tokenType} , null, (code, txt) => {
-		  callback && callback(code === 200, code === 200 ? `Succeed! ${txt}` : `Failed! ${txt}`);
+		  callback && callback(code === 200, code === 200 ? `${txt}` : `Failed! ${txt}`);
         }, (msg) => {
         callback && callback(false, msg); 
       });
@@ -35,6 +35,13 @@ export let User = {
     }, (msg) => {
       callback && callback(false, msg); 
     });
+  },
+
+  deleteSecret(formData, callback){
+	const {access, ty} = Admin.getTokenCookie()
+    const token = access
+    const tokenType = ty
+    Admin.deleteSecret(token,tokenType,formData,callback);
   },
 
 };
@@ -132,7 +139,7 @@ export let Admin = {
       scope: 'write:app read:app read:user write:user write:group read:group',
       state: Math.random(),
     };
-	const oauthUrl = `${window.location.protocol}//${window.location.host}/v2/oauth2/auth?${this.toQuery(params)}`;
+    const oauthUrl = `${window.location.protocol}//${window.location.host}/v2/oauth2/auth?${this.toQuery(params)}`;
     window.location.href = oauthUrl;
   },
 

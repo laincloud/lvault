@@ -27,6 +27,7 @@ deps = [
     "whatwg-fetch@0.10.1",
     "classnames",
     "cookie",
+    "moment",
 ]
 
 [[assets.entry]]

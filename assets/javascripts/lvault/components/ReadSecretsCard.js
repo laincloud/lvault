@@ -1,17 +1,20 @@
 import StyleSheet from 'react-style';
 import React from 'react';
+import {History} from 'react-router';
 
 import {User} from '../models/Models';
 import CardFormMixin from './CardFormMixin';
 
 let ReadSecretsCard = React.createClass({
-  mixins: [CardFormMixin],
+  mixins: [CardFormMixin, History],
 
   getInitialState() {
     return {
       formValids: {
 		  'appname': true,
       },
+      appname: "",
+      procname: "",
     };
   },
 
@@ -42,8 +45,27 @@ let ReadSecretsCard = React.createClass({
   onReset() {
     const {isValid, formData} = this.validateForm(["appname","procname"], ["appname"]);
     if (isValid) {
-      this.setState({ inRequest: true });
-      User.getSecrets(formData, this.onRequestCallback);
+      this.setState(
+        { inRequest: true,
+          appname: formData['appname'],
+          procname: formData['procname'],
+      });
+      User.getSecrets(formData, this.onRequestCallbackToAnotherPage);
+    }
+  },
+
+  onRequestCallbackToAnotherPage(ok, status){
+    if (!ok){
+      this.setState({
+        inRequest: false,
+        reqResult: { fin: true, ok, status },
+      });
+    }
+    else{
+      console.log("hello")
+      this.history.pushState({
+        status,                
+      }, `/v2/spa/secret/${this.state.appname}/detail/${this.state.procname}`);
     }
   },
 

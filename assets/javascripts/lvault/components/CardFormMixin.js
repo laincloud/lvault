@@ -76,6 +76,24 @@ let CardFormMixin = {
     );
   },
 
+  renderActions(title, callback) {
+    const {inRequest, reqResult} = this.state;
+    if (reqResult.fin && reqResult.ok) {
+      return null;
+    }
+    let child = <div className="mdl-spinner mdl-js-spinner is-active" style={{ marginRight: 24 }}></div>;
+    if (!inRequest) {
+      child = (
+        <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" 
+          disabled={this.state.inRequest}
+          onClick={callback}>{title}</button>
+      );
+    }
+    return (
+     child
+    );
+  },
+
   renderForm(submitCallback, inputs) {
     const checkKeyPress = (evt) => {
       if (evt && evt.keyCode === 13 && submitCallback) {

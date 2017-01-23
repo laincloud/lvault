@@ -10,7 +10,7 @@ let ListSecretsPage = React.createClass({
       params:{
         'app':this.props.params.app,
         'proc':this.props.params.proc,
-        'secrets': this.props.location.state.status,
+        'secrets': this.props.location.state?this.props.location.state.status:"[]",
       },
     };
   },

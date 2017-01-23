@@ -29,8 +29,10 @@ let EditSecretCard = React.createClass({
             </textarea>
           </div>
         </form>
-        { this.renderAction("备份并更新", this.onBackupAndUpdate) }
-        { this.renderAction("更新", this.onUpdate)}
+        <div className="mdl-card__actions" style={{ textAlign: 'right'  }}>
+          { this.renderActions("备份并更新", this.onBackupAndUpdate) }
+          { this.renderActions("更新", this.onUpdate)}
+        </div>
       </div>
     );
   },
@@ -61,8 +63,9 @@ let EditSecretCard = React.createClass({
     newFormData['procname']=proc;
     newFormData['fpath']=path;
     newFormData['content']=node.value;
+    this.setState({ inRequest: true  });
     User.putSecret(oldFormData, this.onRequestCallback);
-    User.putSecret(newFormData, this.onRequestCallBack);
+    User.putSecret(newFormData, this.onRequestCallback);
   },
 
   onUpdate(){
@@ -75,7 +78,8 @@ let EditSecretCard = React.createClass({
     newFormData['procname']=proc;
     newFormData['fpath']=path;
     newFormData['content']=node.value;
-    User.putSecret(newFormData, this.onRequestCallBack);
+    this.setState({ inRequest: true  });
+    User.putSecret(newFormData, this.onRequestCallback);
   },
 
 });

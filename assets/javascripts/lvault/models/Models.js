@@ -23,10 +23,10 @@ export let User = {
   },
 
   putSecret(formData, callback) {
-	  const {access, ty} = Admin.getTokenCookie()
-      const token = access
-      const tokenType = ty
-	  Fetch.text(`/v2/secrets?app=${formData.appname}&proc=${formData.procname}&path=${formData.fpath}`, 'PUT', {token,tokenType}, formData, (code, data) => {
+    const {access, ty} = Admin.getTokenCookie()
+    const token = access
+    const tokenType = ty
+    Fetch.text(`/v2/secrets?app=${formData.appname}&proc=${formData.procname}&path=${formData.fpath}`, 'PUT', {token,tokenType}, formData, (code, data) => {
       if (code === 200) {
         callback && callback(true, `Succeed! ${data.message || data}`);
       } else {

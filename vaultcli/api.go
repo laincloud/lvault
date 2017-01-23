@@ -114,6 +114,7 @@ func (c *VaultClient) ListSecrets(token string, path string) ([]string, error) {
 	l.PushBack(path)
 	ret := []string{}
 	for l.Len() > 0 {
+		log.Debug(time.Now().UnixNano())
 		iter := l.Back()
 		p := iter.Value.(string)
 		l.Remove(iter)
@@ -138,6 +139,7 @@ func (c *VaultClient) ListSecrets(token string, path string) ([]string, error) {
 				}
 			}
 		} else {
+			log.Debug(time.Now().UnixNano())
 			log.Debug(s.Data)
 			keys := s.Data["keys"].([]interface{})
 			for _, v := range keys {

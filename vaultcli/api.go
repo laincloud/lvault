@@ -114,11 +114,12 @@ func (c *VaultClient) ListSecrets(token string, path string) ([]string, error) {
 	l.PushBack(path)
 	ret := []string{}
 	for l.Len() > 0 {
-		log.Debug(time.Now().UnixNano())
 		iter := l.Back()
 		p := iter.Value.(string)
 		l.Remove(iter)
+		log.Debug("before list: ", time.Now().UnixNano())
 		s, err := logical.List(p)
+		log.Debug("after list: ", time.Now().UnixNano())
 		if err != nil {
 			log.Error(err)
 			return nil, err
@@ -127,7 +128,9 @@ func (c *VaultClient) ListSecrets(token string, path string) ([]string, error) {
 			log.Debug(p)
 		}
 		if s == nil || len(s.Data) == 0 {
+			log.Debug("before read secrets:", time.Now().UnixNano())
 			s, err = logical.Read(p)
+			log.Debug("after read secrets:", time.Now().UnixNano())
 			log.Debug(s)
 			if err != nil {
 				log.Error(err)

@@ -91,11 +91,14 @@ let ListSecretsCard = React.createClass({
   },
 
   goDeleteSecretFile(app,proc,path){
-    let formData = {};
-    formData['appname']=app;
-    formData['procname']=proc;
-    formData['fpath']=path
-    User.deleteSecret(formData, this.reload);
+    let yes = confirm(`确定要删除文件 - ${path} 吗？`);
+    if (yes){
+      let formData = {};
+      formData['appname']=app;
+      formData['procname']=proc;
+      formData['fpath']=path
+      User.deleteSecret(formData, this.reload);
+    }
   },
 
   reload(){

@@ -22,6 +22,7 @@ func (l *Lvault) settokenkeys(ctx context.Context, w http.ResponseWriter, req *h
 				l.RootToken = initResponse.RootToken
 			} else {
 				log.Debug("invalid root token")
+				l.RootToken = initResponse.RootToken
 			}
 		}
 		l.UnsealKey = initResponse.Keys

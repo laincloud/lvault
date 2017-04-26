@@ -120,6 +120,11 @@ func (v *VaultStatus) UpdateStatus() {
 		data, err := v.doQueryLainlet()
 		if err == nil {
 			//此时 data 应该是一个包含所有 proc 数据的 map
+			if _, ok := data[ProcName]; !ok {
+				message, err := json.Marshal(data)
+				log.Error(string(message), err)
+				continue
+			}
 			CInfo := data[ProcName].Containers
 			//	fmt.Println("num instances:", data[ProcName].NumInstances)
 			// always 0 bug of lainlet?

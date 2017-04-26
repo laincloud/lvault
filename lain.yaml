@@ -34,7 +34,7 @@ test:
 web:  # 定义一个 web 服务
   cmd: ./vault.sh # 基于 release 产生的发布用 image 运行
   port: 8200  # 服务监听的端口，默认为自动分配一个放在 `PORT` 环境变量里
-  healthcheck: '/v1/sys/leader'
+  healthcheck: '/v1'
   num_instances: 1
   env:
     - VAULT_ADDR=http://127.0.0.1:8200

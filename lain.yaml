@@ -29,7 +29,7 @@ release:
 
 test:  
   script:
-    - go test
+    - cd /go/src/github.com/laincloud/lvault && godep go test
 
 web:  # 定义一个 web 服务
   cmd: ./vault.sh # 基于 release 产生的发布用 image 运行

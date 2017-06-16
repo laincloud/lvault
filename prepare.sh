@@ -17,5 +17,6 @@ yum -y install unzip
 git clone --depth=1 https://github.com/golang/sys.git /go/src/golang.org/x/sys # GFW
 git clone --depth=1 https://github.com/golang/net.git /go/src/golang.org/x/net
 go get github.com/mijia/gobuildweb
+cd $GOPATH/src/github.com/mijia/gobuildweb && sed -i '/deps = append(deps, "browserify", "coffeeify", "envify", "uglifyify", "babelify", "babel-preset-es2015", "babel-preset-react", "nib", "stylus")/d' cmds.go  && go install
 gobuildweb dist
 ls -1 | grep -v node_modules | xargs rm -rf

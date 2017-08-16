@@ -2,6 +2,7 @@
 # lvault 
 
 [![Build Status](https://travis-ci.org/laincloud/lvault.svg?branch=master)](https://travis-ci.org/laincloud/lvault)
+[![codecov](https://codecov.io/gh/laincloud/lvault/branch/master/graph/badge.svg)](https://codecov.io/gh/laincloud/lvault)
 [![MIT license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)
 
 ## 功能简介

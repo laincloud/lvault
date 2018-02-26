@@ -3,9 +3,10 @@
 go get github.com/tools/godep
 mkdir -p $GOPATH/src/github.com/hashicorp
 cd $GOPATH/src/github.com/hashicorp
-#git clone https://github.com/hashicorp/vault.git
-go get github.com/hashicorp/vault
+git clone https://github.com/hashicorp/vault.git
+# go get github.com/hashicorp/vault
 cd vault
+git checkout v0.9.5
 make bootstrap
 make
 make dev

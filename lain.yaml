@@ -1,19 +1,19 @@
 appname: lvault  # 全局唯一的应用名
 
-build: 
-  base: laincloud/centos-lain
-  prepare:  
-    version: 20170425 
-    script: 
+build:
+  base: laincloud/centos-lain:20180103
+  prepare:
+    version: 20180228
+    script:
       - ./prepare.sh
     keep:
       - node_modules
-  script:  
-    - ./build.sh 
+  script:
+    - ./build.sh
 
-release: 
-  dest_base: laincloud/centos-lain
-  copy: 
+release:
+  dest_base: laincloud/centos-lain:20180103
+  copy:
     - src: $GOPATH/bin/vault
       dest: /usr/bin/vault
     - src: lvault.sh
@@ -27,23 +27,23 @@ release:
     - src: /lain/app/lvault-0.1/*
       dest: /lain/app/
 
-test:  
+test:
   script:
     - cd /go/src/github.com/laincloud/lvault && godep go test
 
 web:  # 定义一个 web 服务
-  cmd: ./vault.sh # 基于 release 产生的发布用 image 运行
+  cmd: /lain/app/vault.sh # 基于 release 产生的发布用 image 运行
+  memory: 256m
   port: 8200  # 服务监听的端口，默认为自动分配一个放在 `PORT` 环境变量里
   healthcheck: '/v1/sys/seal-status'
   num_instances: 1
   env:
     - VAULT_ADDR=http://127.0.0.1:8200
-  persistent_dirs:
-    - /lain/app/log
 
 proc.lvault:
   type: web
-  cmd: ./lvault.sh 
+  cmd: /lain/app/lvault.sh
+  memory: 256m
   mountpoint:
     - /v2
   port: 8001

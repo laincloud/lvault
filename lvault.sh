@@ -5,10 +5,11 @@ environ=$LAIN_DOMAIN
 DEBUG="false"
 HTTPS="false"
 
-source ./config
+source /lain/app/config
 
 export SSO_CLIENT_ID=$clientid
 export SSO_CLIENT_SECRET=$clientsec
 export SSO_SERVER_NAME=$ssoserver
 
-exec ./lvault-0.1.linux.amd64 -ssoserver=$SSO_SERVER_NAME -ssoid=$SSO_CLIENT_ID -ssosecret=$SSO_CLIENT_SECRET -https=$HTTPS -debug=$DEBUG
+cd /lain/app
+exec /lain/app/lvault-0.1.linux.amd64 -ssoserver=$SSO_SERVER_NAME -ssoid=$SSO_CLIENT_ID -ssosecret=$SSO_CLIENT_SECRET -https=$HTTPS -debug=$DEBUG

@@ -1,5 +1,6 @@
 #!/bin/sh
 
+cd /lain/app
 
 #(echo "begin"; sleep 15; sh start.sh; echo "ok")&
 sleep 5
@@ -13,7 +14,7 @@ listener "tcp" {
 	address = "0.0.0.0:8200"
 	tls_disable = 1
 }
-disable_mlock=true' >vaultetcd.conf
+disable_mlock=true' >/lain/app/vaultetcd.conf
 
 echo "start"
-exec vault server -config=vaultetcd.conf
+exec vault server -config=/lain/app/vaultetcd.conf

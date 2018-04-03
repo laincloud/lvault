@@ -4,10 +4,9 @@ cd /lain/app
 
 #(echo "begin"; sleep 15; sh start.sh; echo "ok")&
 sleep 5
-echo 'backend "etcd" {
-	path = "vault/"
-	address = "http://etcd.lain:4001"
-	advertise_addr ="http://'$LAIN_PROCNAME-$DEPLOYD_POD_INSTANCE_NO.$LAIN_APPNAME'.lain:8200"
+echo 'storage "consul" {
+  path = "vault/"
+	address = "consul.lain:8500"
 }
 
 listener "tcp" {

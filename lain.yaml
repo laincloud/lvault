@@ -16,14 +16,8 @@ release:
   copy:
     - src: $GOPATH/bin/vault
       dest: /usr/bin/vault
-    - src: lvault.sh
-      dest: lvault.sh
     - src: vault.sh
       dest: vault.sh
-    - src: start.sh
-      dest: start.sh
-    - src: config
-      dest: config
     - src: /lain/app/lvault-0.1/*
       dest: /lain/app/
 
@@ -42,13 +36,16 @@ web:  # 定义一个 web 服务
 
 proc.lvault:
   type: web
-  cmd: /lain/app/lvault.sh
+  cmd: /lain/app/lvault-0.1.linux.amd64 -ssoserver=$SSO_SERVER_NAME -ssoid=$SSO_CLIENT_ID -ssosecret=$SSO_CLIENT_SECRET -https=$HTTPS -debug=$DEBUG
   memory: 256m
   mountpoint:
     - /v2
   port: 8001
   healthcheck: '/status'
   num_instances: 1
-
-notify:
-  slack: "#hello"  # 应用相关的通知和报警都会发送到该 slack channel
+  env:
+    - HTTPS=false
+    - DEBUG=false
+    - SSO_CLIENT_ID=
+    - SSO_CLIENT_SECRET=
+    - SSO_SERVER_NAME=

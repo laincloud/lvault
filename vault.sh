@@ -2,7 +2,6 @@
 
 cd /lain/app
 
-#(echo "begin"; sleep 15; sh start.sh; echo "ok")&
 sleep 5
 echo 'storage "consul" {
   path = "vault/"

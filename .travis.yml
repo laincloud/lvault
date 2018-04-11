@@ -14,7 +14,6 @@ install:
 script:
   - lain config save-global private_docker_registry registry.lain.local
   - lain build
-  - lain test
   - LAIN_APPNAME=lvault
   - LAIN_IMAGE_VERSION="$(git show -s --format=%ct $TRAVIS_COMMIT)-$TRAVIS_COMMIT"
   - ci_env=`bash <(curl -s https://codecov.io/env)`

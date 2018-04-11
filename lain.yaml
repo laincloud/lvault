@@ -23,10 +23,6 @@ release:
     - src: /lain/app/lvault-0.1/*
       dest: /lain/app/
 
-test:
-  script:
-    - cd /go/src/github.com/laincloud/lvault && godep go test
-
 web:  # 定义一个 web 服务
   cmd: /lain/app/vault.sh # 基于 release 产生的发布用 image 运行
   memory: 256m

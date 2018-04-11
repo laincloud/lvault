@@ -18,6 +18,8 @@ release:
       dest: /usr/bin/vault
     - src: vault.sh
       dest: vault.sh
+    - src: lvault.sh
+      dest: lvault.sh
     - src: /lain/app/lvault-0.1/*
       dest: /lain/app/
 

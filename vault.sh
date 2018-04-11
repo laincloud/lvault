@@ -4,8 +4,9 @@ cd /lain/app
 
 sleep 5
 echo 'storage "consul" {
-  path = "vault/"
+    path = "vault/"
 	address = "consul.lain:8500"
+	api_addr = "http://lvault.lain.local"
 }
 
 listener "tcp" {

@@ -14,7 +14,7 @@ build:
 release:
   dest_base: laincloud/centos-lain:20180103
   copy:
-    - src: $GOPATH/bin/vault
+    - src: /go/bin/vault
       dest: /usr/bin/vault
     - src: vault.sh
       dest: vault.sh

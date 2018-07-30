@@ -48,7 +48,7 @@ func parseErr(err error) (int, []byte) {
 	if strings.Contains(err.Error(), "Vault is sealed") {
 		return http.StatusServiceUnavailable, []byte(err.Error())
 	} else {
-		panic(err)
+		return http.StatusInternalServerError, []byte(err.Error())
 	}
 }
 

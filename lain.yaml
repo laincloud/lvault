@@ -3,7 +3,7 @@ appname: lvault  # 全局唯一的应用名
 build:
   base: laincloud/centos-lain:20180103
   prepare:
-    version: 20180228
+    version: 20180428
     script:
       - ./prepare.sh
     keep:
@@ -43,7 +43,7 @@ proc.lvault:
   num_instances: 1
   env:
     - HTTPS=false
-    - DEBUG=false
+    - DEBUG=true
     - SSO_CLIENT_ID=
     - SSO_CLIENT_SECRET=
     - SSO_SERVER_NAME=

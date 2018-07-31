@@ -108,7 +108,6 @@ func (c *VaultClient) DeleteSecret(token string, path string) error {
 
 func (c *VaultClient) ListSecrets(token string, path string) ([]string, error) {
 	c.c.SetToken(token)
-	defer c.c.ClearToken()
 	logical := c.c.Logical()
 	l := list.New()
 	l.PushBack(path)

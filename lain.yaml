@@ -3,7 +3,7 @@ appname: lvault  # 全局唯一的应用名
 build:
   base: laincloud/centos-lain:20180103
   prepare:
-    version: 20180328
+    version: 20180428
     script:
       - ./prepare.sh
     keep:

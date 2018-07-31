@@ -21,7 +21,7 @@ deps = [
     "react-router@1.0.0-rc1",
     "history@1.13.1",
     "lodash@3.10.1",
-    "react-style",
+    "react-style@0.5.5",
     "whatwg-fetch@0.10.1",
     "classnames",
     "cookie",

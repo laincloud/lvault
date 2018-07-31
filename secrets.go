@@ -53,9 +53,7 @@ func parseErr(err error) (int, []byte) {
 }
 
 func (l *Lvault) SecretsEndpoint(ctx context.Context, w http.ResponseWriter, req *http.Request) context.Context {
-
-	log.Debug(time.Now().UnixNano())
-	log.Debug(req)
+	log.Infof("Receive a request: %+v, now: %v.", req, time.Now())
 	body, _ := ioutil.ReadAll(req.Body)
 	req.ParseForm()
 

@@ -2,6 +2,7 @@ package vaultcli
 
 import (
 	"container/list"
+	"net/http"
 	"os"
 	"strings"
 	"time"
@@ -26,6 +27,9 @@ func (c *VaultClient) InitClient(tls bool) {
 		panic(err)
 	}
 	c.c = client
+	c.httpClient = &http.Client{
+		Timeout: 3 * time.Second,
+	}
 	go c.status.UpdateStatus()
 	go c.UpdateClient()
 }
@@ -86,13 +90,12 @@ func (c *VaultClient) Unseal(unsealkey []string) (err error) {
 }
 
 func (c *VaultClient) unseal(unsealkey string) error {
-	_, err := c.c.Sys().Unseal(unsealkey)
+	_, err := c.RawUnseal(unsealkey)
 	return err
 }
 
 func (c *VaultClient) PutSecret(token string, path string, data string) error {
 	c.c.SetToken(token)
-	defer c.c.ClearToken()
 	secrets := make(map[string]interface{})
 	secrets["value"] = data
 	_, err := c.c.Logical().Write(path, secrets)
@@ -101,14 +104,11 @@ func (c *VaultClient) PutSecret(token string, path string, data string) error {
 
 func (c *VaultClient) DeleteSecret(token string, path string) error {
 	c.c.SetToken(token)
-	defer c.c.ClearToken()
 	_, err := c.c.Logical().Delete(path)
 	return err
 }
 
 func (c *VaultClient) ListSecrets(token string, path string) ([]string, error) {
-	c.c.SetToken(token)
-	logical := c.c.Logical()
 	l := list.New()
 	l.PushBack(path)
 	ret := []string{}
@@ -117,7 +117,7 @@ func (c *VaultClient) ListSecrets(token string, path string) ([]string, error) {
 		p := iter.Value.(string)
 		l.Remove(iter)
 		log.Debug("before list: ", time.Now().UnixNano())
-		s, err := logical.List(p)
+		s, err := c.RawList(token, p)
 		log.Debug("after list: ", time.Now().UnixNano())
 		if err != nil {
 			log.Error(err)
@@ -128,7 +128,7 @@ func (c *VaultClient) ListSecrets(token string, path string) ([]string, error) {
 		}
 		if s == nil || len(s.Data) == 0 {
 			log.Debug("before read secrets:", time.Now().UnixNano())
-			s, err = logical.Read(p)
+			s, err = c.RawRead(token, p)
 			log.Debug("after read secrets:", time.Now().UnixNano())
 			log.Debug(s)
 			if err != nil {

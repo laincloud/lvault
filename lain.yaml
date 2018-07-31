@@ -43,7 +43,7 @@ proc.lvault:
   num_instances: 1
   env:
     - HTTPS=false
-    - DEBUG=false
+    - DEBUG=true
     - SSO_CLIENT_ID=
     - SSO_CLIENT_SECRET=
     - SSO_SERVER_NAME=

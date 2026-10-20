@@ -129,6 +129,7 @@ func (l *Lvault) SecretsEndpoint(ctx context.Context, w http.ResponseWriter, req
 		}
 		totalPath := DATAPATHPREFIX + app + "/" + proc + path
 		putData := ParseInput((app + "/" + proc + path), string(body))
+		SyncSecretEvent("write", app, proc, path, string(body))
 		byteData, _ := json.Marshal(putData)
 		byteDataBase64 := coder.EncodeToString(byteData)
 		log.Debug(string(byteData))
